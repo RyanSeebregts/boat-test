@@ -1,4 +1,5 @@
 import express from 'express';
+const { env } = require('process')
 
 let app = require('./server').default;
 
@@ -14,11 +15,11 @@ if (module.hot) {
   console.info('✅  Server-side HMR Enabled!');
 }
 
-const port = process.env.PORT || 3000;
-const host = process.env.YOUR_HOST || '0.0.0.0';
+const getEnv = c => process.env[c];
+
 export default express()
   .use((req, res) => app.handle(req, res))
-  .listen(port, host, function(err) {
+  .listen(getEnv('PORT'), function(err) {
     if (err) {
       console.error(err);
       return;
