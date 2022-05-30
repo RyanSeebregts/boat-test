@@ -9,6 +9,9 @@ import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import theme from './theme';
 import createEmotionCache from './createEmotionCache'
+import { Provider } from 'react-redux';
+import {createStore} from './redux/store'
+import serialize from 'serialize-javascript';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -28,7 +31,7 @@ const jsScriptTagsFromAssets = (assets, entrypoint, ...extra) => {
 
 
 
-const renderFullPage = (html, css) => {
+const renderFullPage = (html, css, finalState) => {
   return `
     <!DOCTYPE html>
     <html lang="">
@@ -43,6 +46,9 @@ const renderFullPage = (html, css) => {
       </head>
       <body>
         <div id="root">${html}</div>
+        <script>
+          window.__PRELOADED_STATE__ = ${serialize(finalState)}
+        </script>
         ${jsScriptTagsFromAssets(assets, 'client', 'defer', 'crossorigin')}
       </body>
     </html>
@@ -53,19 +59,25 @@ export const renderApp = (req, res) => {
   const cache = createEmotionCache();
   const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache);
   const context = {};
+  const store = createStore({});
+
   const markup = renderToString(
     <CacheProvider value={cache}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <StaticRouter context={context} location={req.url}>
-          <App />
-        </StaticRouter>
+        <Provider store={store}>
+          <CssBaseline />
+          <StaticRouter context={context} location={req.url}>
+            <App />
+          </StaticRouter>
+        </Provider>
       </ThemeProvider>
     </CacheProvider>
   );
+  const finalState = store.getState();
+
   const emotionChunks = extractCriticalToChunks(markup);
   const emotionCss = constructStyleTagsFromChunks(emotionChunks);
-  const html = renderFullPage(markup, emotionCss)
+  const html = renderFullPage(markup, emotionCss, finalState)
   return {context, html};
 }
 

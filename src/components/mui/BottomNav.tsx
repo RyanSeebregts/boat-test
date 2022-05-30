@@ -24,7 +24,6 @@ const BottomNav = (props: propTypes) => {
     const history = useHistory();
 
     const changeLocation = (newValue: number) => {
-        console.log(newValue)
         switch(newValue) {
             case 0:
                 history.replace('/rent')
