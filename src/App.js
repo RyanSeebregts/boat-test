@@ -1,15 +1,18 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Home from './pages/Home';
-import About from './pages/About';
+import Profile from './pages/Profile';
+import Boats from './pages/Boats';
+import Rent from './pages/Rent';
 
 import './App.css';
 
 const App = () => (
   <Switch>
-    <Route exact={true} path="/home" component={Home} />
-    <Route exact={true} path="/about" component={About} />
-    <Redirect from="" to="/home" />
+    <Route exact={true} path="/boats" component={Boats} />
+    <Route exact={true} path="/profile" component={Profile} />
+    <Route exact={true} path="/rent" component={Rent} />
+
+    <Redirect from="" to="/boats" />
   </Switch>
 );
 

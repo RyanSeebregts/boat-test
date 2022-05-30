@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Person from '@mui/icons-material/Person';
+import EventNote from '@mui/icons-material/EventNote';
+import DirectionsBoat from '@mui/icons-material/DirectionsBoat';
 import styled from '@emotion/styled'
 import {useHistory} from "react-router-dom";
 
@@ -27,13 +27,13 @@ const BottomNav = (props: propTypes) => {
         console.log(newValue)
         switch(newValue) {
             case 0:
-                history.replace('/about')
+                history.replace('/rent')
                 break;
             case 1:
-                history.replace('/home')
+                history.replace('/boats')
                 break;
             case 2:
-                history.replace('/about')
+                history.replace('/profile')
                 break;
         }
     }
@@ -48,9 +48,9 @@ const BottomNav = (props: propTypes) => {
             }}
             component={Container}
         >
-            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-            <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+            <BottomNavigationAction label="Rent" icon={<EventNote />} />
+            <BottomNavigationAction label="Boats" icon={<DirectionsBoat />} />
+            <BottomNavigationAction label="Profile" icon={<Person />} />
         </BottomNavigation>
     );
 }

@@ -10,7 +10,6 @@ const Container = styled.div`
     height: 100%;
     top: 0px;
     left: 0px;
-    background: blue;
 `
 
 const PageContainer = styled.div`
