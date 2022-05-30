@@ -9,7 +9,7 @@
   "scripts": {
     "build": "razzle build --noninteractive",
     "test": "razzle test --env=jsdom",
-    "start": "NODE_ENV=production node build/server.js",
+    "start": "serve -s build",
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
